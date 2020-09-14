@@ -1,9 +1,16 @@
 {{ partial "header.html" . }}
 
-{{ range $index, $page := (.Paginate (where (where .Site.RegularPages "Type" "posts") ".Params.hidden" "!=" "true" )).Pages }}
-  {{if ne $index 0 }}
-    {{ end }}
-  {{ .Render "li" }}
+{{ $pages := (.Paginate (where (where .Site.RegularPages "Type" "posts") ".Params.hidden" "!=" "true" )).Pages }}
+{{ if $pages }}
+  {{ range $index, $page := $pages }}
+    {{if ne $index 0 }}
+      {{ end }}
+    {{ .Render "li" }}
+  {{ end }}
+{{ else }}
+  <header class="l-header">
+    <h2 class="p-title">Coming soon</h2>
+  </header>
 {{ end }}
 
 {{ partial "pagination.html" .Paginator }} <!-- {{ partial "siteinfo.html" . }} -->
